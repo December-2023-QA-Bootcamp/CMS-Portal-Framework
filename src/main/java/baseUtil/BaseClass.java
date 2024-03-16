@@ -62,6 +62,7 @@ public class BaseClass {
 	// newly added
 	@Parameters("browser")
 	@BeforeMethod
+	// why firefox is not working
 	public void setUp(@Optional(EDGE) String browserName) {
 		// If any reason our test suit doesn't have parameter or value, then @Optional(EDGE) will work
 		// If there is empty value or wrong value in testng.xml suite, then browser will not match and get the default one
