@@ -5,7 +5,8 @@
 	<!-- above line added -->
 	<test thread-count="5" name="Test">
 		<classes>
-			<class name="pagesTest.HomePageTest" />
+			<!-- <class name="pagesTest.HomePageTest" /> -->
+			<class name="pagesTest.NewUserRegistrationTest" />
 		</classes>
 	</test> 
 </suite>

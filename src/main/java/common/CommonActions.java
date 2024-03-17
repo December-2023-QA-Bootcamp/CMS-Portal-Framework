@@ -36,9 +36,9 @@ public class CommonActions {
 
 	public static void verifyTitle(WebDriver driver, String expectedTitle) {
 		try {
-			Loggers.logTheTest(
-					"Actual Title is : " + driver.getTitle() + " ---> And Expected Title is :" + expectedTitle);
-			Assert.assertEquals(driver.getTitle(), expectedTitle);
+			String actualTitle = driver.getTitle();
+			Loggers.logTheTest("Actual Title is : " + actualTitle + " ---> And Expected Title is :" + expectedTitle);
+			Assert.assertEquals(actualTitle, expectedTitle);
 		} catch (NullPointerException e) {
 			e.printStackTrace();
 			Loggers.logTheTest("Driver is not initiated properly Or Home Page Title doesn't match");
@@ -117,7 +117,7 @@ public class CommonActions {
 		}
 	}
 
-	public static boolean elementEnabled(WebElement element) {
+	public static void elementEnabled(WebElement element) {
 		try {
 			boolean flag = element.isEnabled();
 			Loggers.logTheTest(element + "<---------> is Enabled, " + flag);
@@ -129,10 +129,9 @@ public class CommonActions {
 																							// this throwable.
 			Assert.fail();
 		}
-		return true;
 	}
 
-	public static boolean elementDisplayed(WebElement element) {
+	public static void elementDisplayed(WebElement element) {
 		try {
 			boolean flag = element.isDisplayed();
 			Loggers.logTheTest(element + "<---------> is Displayed, " + flag);
@@ -141,10 +140,9 @@ public class CommonActions {
 			e.printStackTrace();
 			Loggers.logTheTest(element + "<----------> is not Displayed\n" + e.getMessage());
 		}
-		return true;
 	}
 
-	public static boolean elementSelected(WebElement element) {
+	public static void elementSelected(WebElement element) {
 		try {
 			boolean flag = element.isSelected();
 			Loggers.logTheTest(element + "<---------> is Selected, " + flag);
@@ -153,8 +151,9 @@ public class CommonActions {
 			e.printStackTrace();
 			Loggers.logTheTest(element + "<----------> is not Selected\n" + e.getMessage());
 		}
-		return true;
 	}
+	
+	
 
 	public static void clearTextFromTheField(WebElement element) {
 		try {
@@ -190,7 +189,7 @@ public class CommonActions {
 		verifyAttribute01(element, Attribute.MAX_LENGTH, expected);
 	}
 
-	public static void verifyAttribute02(WebElement element, String expectedErrorMsg, Attribute attribute) {
+	public static void verifyAttribute02(WebElement element, Attribute attribute, String expectedErrorMsg) {
 		String actual = getAttributeValue(element, attribute);
 		// element.getAttribute(attribute.toString());
 		Loggers.logTheTest(
@@ -199,11 +198,11 @@ public class CommonActions {
 	}
 
 	public static void verifyErrorMsgUnderTheField(WebElement element, String expectedErrorMsg) {
-		verifyAttribute02(element, expectedErrorMsg, Attribute.INNER_TEXT); // "innerHTML"
+		verifyAttribute02(element, Attribute.INNER_TEXT, expectedErrorMsg); // "innerHTML"
 	}
 
 	public static void verifyErrorMsg(WebElement element, String expectedErrorMsg) {
-		verifyAttribute02(element, expectedErrorMsg, Attribute.INNER_TEXT); // "innerHTML"
+		verifyAttribute02(element, Attribute.INNER_TEXT, expectedErrorMsg); // "innerHTML"
 	}
 
 	public static void hoverOverAction(WebDriver driver, WebElement element) {
@@ -236,21 +235,28 @@ public class CommonActions {
 		}
 	}
 
-	public static String currentUrl(WebDriver driver) {
-		Loggers.logTheTest("Current URL is : " + driver.getCurrentUrl());
-		return driver.getCurrentUrl();
+	public static void currentUrl(WebDriver driver, String expectedURL) {
+		String currentURL = driver.getCurrentUrl();
+		Loggers.logTheTest("Current URL : " + currentURL + ", Expected URL : " + expectedURL);
+		Assert.assertEquals(currentURL, expectedURL, "Current URL is not correct");		
+	}
+	
+	public static void verifyTextInTheWebElement(WebElement element, String expected) {
+		String actual = element.getText();
+		Loggers.logTheTest(element + " ---> Actual text : " + actual + ". Expected text : " + expected);
+		Assert.assertEquals(actual, expected, "Text In the WebElement doesn't match");
 	}
 
-	public static String validationOfHeader(WebElement element, String expectedHeader) {
-		Assert.assertEquals(element.getText(), expectedHeader);
-		Loggers.logTheTest(
-				element + " ---> Actual Header : " + element.getText() + ". Expected Header : " + expectedHeader);
-		return null;
+	public static void validationOfHeader(WebElement element, String expectedHeader) {
+		String actualHeader = element.getText();
+		Assert.assertEquals(actualHeader, expectedHeader, "Header doesn't match");
+		Loggers.logTheTest(element + " ---> Actual Header : " + actualHeader + ". Expected Header : " + expectedHeader);
 	}
 
 	public static String validationOfSubHeader(WebElement element, String expectedSubHeader) {
-		Assert.assertEquals(element.getText(), expectedSubHeader);
-		Loggers.logTheTest(element + " ---> Actual Sub Header : " + element.getText() + ". Expected SubHeader : "
+		String actualSubHeader = element.getText();
+		Assert.assertEquals(actualSubHeader, expectedSubHeader, "Sub Header doesn't match");
+		Loggers.logTheTest(element + " ---> Actual Sub Header : " + actualSubHeader + ". Expected SubHeader : "
 				+ expectedSubHeader);
 		return null;
 	}
@@ -307,7 +313,7 @@ public class CommonActions {
 
 	}
 
-	public void jsExecutor(WebDriver driver, String script, WebElement element) {
+	public static void usingJavascriptExecutor(WebDriver driver, String script, WebElement element) {
 		// JavascriptExecutor js = (JavascriptExecutor)driver; // instead of writing
 		// this 'js', we can write below one
 		((JavascriptExecutor) driver).executeScript(script, element);
