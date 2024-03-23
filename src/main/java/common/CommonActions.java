@@ -18,8 +18,10 @@ import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import com.google.common.io.Files;
 import constants.Attribute;
+import net.bytebuddy.agent.builder.AgentBuilder.RedefinitionStrategy.BatchAllocator.ForTotal;
 import reports.Loggers;
 
+import org.bouncycastle.pkix.SubjectPublicKeyInfoChecker;
 import org.openqa.selenium.By;
 import org.openqa.selenium.ElementNotInteractableException;
 import org.openqa.selenium.JavascriptExecutor;
@@ -174,15 +176,15 @@ public class CommonActions {
 
 	// Attribute is coming from package constants, we will check the outcome later
 	public static String getAttributeValue(WebElement element, Attribute attribute) {
-		return element.getAttribute(attribute.getTheAttribute());
+		 return element.getAttribute(attribute.getTheAttribute());
 	}
 
 	public static void verifyAttribute01(WebElement element, Attribute attribute, String expectedValue) {
-		String actual = getAttributeValue(element, attribute);
+		String actualValue = getAttributeValue(element, attribute);
 		// element.getAttribute(attribute.toString());
-		Loggers.logTheTest(element + " ---> We can Enter : " + actual
+		Loggers.logTheTest(element + " ---> We can Enter : " + actualValue
 				+ " Character in the field which was similar with the Expected as: " + expectedValue);
-		Assert.assertEquals(actual, expectedValue);
+		Assert.assertEquals(actualValue, expectedValue);
 	}
 
 	public static void verifyLengthOfTheFieldContent(WebElement element, String expected) {
@@ -284,15 +286,15 @@ public class CommonActions {
 		}
 	}
 
-	public static void selectDropdownAll(WebElement element, List<WebElement> elements) {
+	public static void selectDropdownOnebyOne(WebElement element, List<WebElement> elements) {
 		try {
 			Select select = new Select(element);
-			for (int i = 0; i < elements.size(); i++) {
+			for (int i = 1; i < elements.size(); i++) {
 				Loggers.logTheTest(elements.get(i).getText() + " is present in the dropdown");
 				select.selectByIndex(i);
 				pause(2);
 			}
-			Loggers.logTheTest("Total Element: " + elements.size() + " is present in the dropdown");
+			Loggers.logTheTest("Total Element: " + (elements.size()-1) + " is present in the dropdown");
 		} catch (NullPointerException | NoSuchElementException e) { // elements er exception add korte hobe
 			e.printStackTrace();
 			Loggers.logTheTest(element + " : This element Not Found");
