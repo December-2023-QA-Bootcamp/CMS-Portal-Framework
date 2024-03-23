@@ -7,6 +7,7 @@ import static common.CommonWaits.*;
 
 import java.awt.Dimension;
 import java.time.Duration;
+import java.util.List;
 
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -79,7 +80,32 @@ public class NewUserRegistration {
 	@FindBy(id = "cms-newuser-middleName")
 	WebElement middleName;
 
+	@FindBy(id = "cms-newuser-lastName")
+	WebElement lastName;
 
+	@FindBy(id = "cms-newuser-nameSuffix")
+	WebElement suffix;
+	
+	@FindBy(xpath = "//select[@id='cms-newuser-nameSuffix']/option")
+	List <WebElement> suffixList;
+	
+	@FindBy(id = "cms-newuser-birthMonth")
+	WebElement birthMonth;
+	
+	@FindBy(xpath = "//select[@id='cms-newuser-birthMonth']/option")
+	List<WebElement> birthMonthList;
+
+	@FindBy(id = "cms-newuser-birthDate")
+	WebElement birthDate;
+	
+	@FindBy(xpath = "//select[@id='cms-newuser-birthDate']/option")
+	List<WebElement> birthDateList;
+
+	@FindBy(id = "cms-newuser-birthYear")
+	WebElement birthYear;
+	
+	@FindBy(xpath = "//select[@id='cms-newuser-birthYear']/option")
+	List<WebElement> birthYearList;
 		
 	
 	
@@ -134,21 +160,80 @@ public class NewUserRegistration {
 	
 	public void firstNameValidation() {
 		verifyLengthOfTheFieldContent(firstName, "20");
-		inputTextThenClickTab(firstName, "% & \\\" ( )");
+		inputTextThenClickTab(firstName, "% & \\\" ( )"); // Why this method is used? Try to understand
 		verifyErrorMsgUnderTheField(alphabeticCharactersErrorMsgUnderTheField, "Must be alphabetic characters.");
 		pause(3);
 		clearTextFromTheField(firstName);
-		inputTextThenClickTab(firstName, "");
-		pause(3);
 		verifyErrorMsgUnderTheField(requiredFieldErrorMsgUnderTheField, "Required field.");
 		pause(3);
-		inputTextThenClickTab(firstName, "6573684765");
+		inputText(firstName, "6573684765");
 		verifyErrorMsgUnderTheField(alphabeticCharactersErrorMsgUnderTheField, "Must be alphabetic characters.");
 		pause(3);
 		clearTextFromTheField(firstName);
 		pause(3);
 		inputText(firstName, "Moha'mm-ad Md");
 		pause(3);
+	}
+	
+	public void middleNameValidation() {
+		verifyLengthOfTheFieldContent(middleName, "20");
+		inputText(middleName, "% & \\\" ( )");
+		verifyErrorMsgUnderTheField(alphabeticCharactersErrorMsgUnderTheField, "Must be alphabetic characters.");
+		pause(3);
+		clearTextFromTheField(middleName);
+		pause(3);
+		inputText(middleName, "6573684765");
+		verifyErrorMsgUnderTheField(alphabeticCharactersErrorMsgUnderTheField, "Must be alphabetic characters.");
+		pause(3);
+		clearTextFromTheField(middleName);
+		pause(3);
+		inputText(middleName, "To'fael Ka-bir");
+		pause(3);
+	}
+	
+	public void lastNameValidation() {
+		verifyLengthOfTheFieldContent(lastName, "25");
+		inputTextThenClickTab(lastName, "% & \\\" ( )");
+		verifyErrorMsgUnderTheField(alphabeticCharactersErrorMsgUnderTheField, "Must be alphabetic characters.");
+		pause(3);
+		clearTextFromTheField(lastName);
+		verifyErrorMsgUnderTheField(requiredFieldErrorMsgUnderTheField, "Required field.");
+		pause(3);
+		inputText(lastName, "6573684765");
+		verifyErrorMsgUnderTheField(alphabeticCharactersErrorMsgUnderTheField, "Must be alphabetic characters.");
+		pause(3);
+		clearTextFromTheField(lastName);
+		pause(3);
+		inputText(lastName, "S'- harkar");
+		pause(5);
+	}
+	
+	public void suffixValidation() {
+		selectDropdownOnebyOne(suffix, suffixList);
+		pause(3);
+		selectDropdown(suffix, "SR");
+		pause(3);
+	}
+	
+	public void dobValidation() {
+		clickElementThenTab(birthMonth);
+		pause(3);
+		clickElementThenTab(birthDate); // First 2 under the field message can't be validated, 3rd one done
+		pause(3);
+		clickElementThenTab(birthYear);
+		pause(3);
+		verifyErrorMsgUnderTheField(requiredFieldErrorMsgUnderTheField, "Required field.");
+		pause(3);
+		selectDropdownOnebyOne(birthMonth, birthMonthList);
+		selectDropdown(birthMonth, "February");
+		pause(3);
+		selectDropdownOnebyOne(birthDate, birthDateList);
+		selectDropdown(birthDate, "29");
+		pause(3);
+		selectDropdownOnebyOne(birthYear, birthYearList);
+		selectDropdown(birthYear, "1996");
+		pause(3);
+		
 	}
 
 	

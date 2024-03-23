@@ -12,6 +12,11 @@ public class NewUserRegistrationTest extends BaseClass{
 		newUserRegistration.stepOneClickOnCancelButtonDirectToHomePage();
 		newUserRegistration.selectApplicationOnStepOneAndNavigateToStepTwo();
 		newUserRegistration.stepTwoTitleAndHeaderValidation();
+//		newUserRegistration.firstNameValidation();
+//		newUserRegistration.middleNameValidation();
+//		newUserRegistration.lastNameValidation();
+	// 	newUserRegistration.suffixValidation();
+		newUserRegistration.dobValidation();
 	}
 	
 	
