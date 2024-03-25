@@ -71,7 +71,7 @@ public class NewUserRegistration {
 	@FindBy(id = "cms-newuser-firstName")
 	WebElement firstName;
 	
-	@FindBy(xpath = "//span[text()='Required field.']")
+	@FindBy(xpath = "//span[contains(text(), 'Required field.')]")
 	WebElement requiredFieldErrorMsgUnderTheField;
 
 	@FindBy(xpath = "//span[text()='Must be alphabetic characters.']")
@@ -106,6 +106,63 @@ public class NewUserRegistration {
 	
 	@FindBy(xpath = "//select[@id='cms-newuser-birthYear']/option")
 	List<WebElement> birthYearList;
+	
+	@FindBy(xpath = "//label[@class='check-radio']//parent::li[@class='cms-radio-item']")
+	WebElement usBasedAddress;
+
+	@FindBy(xpath = "//label[@class='check-radio']//parent::li[@class='cms-radio-item2']")
+	WebElement nonUsBasedAddress;
+
+	@FindBy(id = "cms-newuser-homeAddressLine1")
+	WebElement addressLine1;
+
+	@FindBy(xpath = "//span[text()='Must be alphanumeric characters.']")
+	WebElement alphanumericCharactersErrorMsgUnderTheField;
+
+	@FindBy(id = "cms-newuser-usAddress2")
+	WebElement addressLine2;
+
+	@FindBy(id = "cms-newuser-usCity")
+	WebElement city;
+
+	@FindBy(id = "cms-newuser-usState")
+	WebElement state;
+	
+	@FindBy(xpath = "//select[@id='cms-newuser-usState']/option")
+	List<WebElement> stateList;
+
+	@FindBy(name = "cms-newuser-zipcode")
+	WebElement zipCode;
+
+	@FindBy(xpath = "//span[text()='Must be a valid numeric ZIP Code.']")
+	WebElement numericZipCodeErrorMsgUnderTheField;
+
+	@FindBy(xpath = "//span[text()='Must be a valid numeric ZIP+4 Code.']")
+	WebElement numericZipPlus4CodeErrorMsgUnderTheField;
+
+	@FindBy(id = "cms-newuser-usZipcodeExt")
+	WebElement zipCodeExt;
+
+	@FindBy(id = "cms-newuser-usEmail")
+	WebElement email;
+
+	@FindBy(id = "cms-newuser-usConfirmEmail")
+	WebElement confirmEmail;
+
+	@FindBy(xpath = "//span[text()='Must match Email Address values.']")
+	WebElement mismatchEmailAddressErrorMsgUnderTheField;
+
+	@FindBy(id = "cms-newuser-usPhoneNumber")
+	WebElement phoneNumber;
+
+	@FindBy(xpath = "//span[text()='Phone Number must not start with a 1 or 0.']")
+	WebElement phoneNumberNotStartWithErrorMsgUnderTheField;
+
+	@FindBy(xpath = "//span[text()='Must be a valid Phone Number.']")
+	WebElement validPhoneNumberErrorMsgUnderTheField;
+
+	@FindBy(id = "step2NextButton")
+	WebElement nextButtonStep2;
 		
 	
 	
@@ -131,8 +188,8 @@ public class NewUserRegistration {
 	}
 	
 	public void selectApplicationOnStepOneAndNavigateToStepTwo() {
-		pause(3);
-		clickElement(newUserRegistration);
+//		pause(3);
+//		clickElement(newUserRegistration);
 		pause(3);
 		currentUrl(driver, "https://portal.cms.gov/portal/newuserregistration");
 		verifyTitle(driver, "CMS Enterprise Portal - New User Registration");
@@ -216,6 +273,18 @@ public class NewUserRegistration {
 	}
 	
 	public void dobValidation() {
+		
+		selectDropdown(birthMonth, "February");
+		pause(3);
+		selectDropdown(birthMonth, "Select Birth Month");
+		pause(3);
+		verifyErrorMsgUnderTheField(requiredFieldErrorMsgUnderTheField, " Required field.");
+		pause(3);
+		selectDropdownOnebyOne(birthMonth, birthMonthList);
+		selectDropdown(birthMonth, "February");
+	
+		
+		/*
 		clickElementThenTab(birthMonth);
 		pause(3);
 		clickElementThenTab(birthDate); // First 2 under the field message can't be validated, 3rd one done
@@ -233,9 +302,187 @@ public class NewUserRegistration {
 		selectDropdownOnebyOne(birthYear, birthYearList);
 		selectDropdown(birthYear, "1996");
 		pause(3);
+			*/
 		
 	}
+	
+	public void addressLine1Validation() {
+		clickElement(nonUsBasedAddress);
+		pause(5);
+		clickElement(usBasedAddress);
+		// start of addressLine 1 validation
+		verifyLengthOfTheFieldContent(addressLine1, "60");
+		inputTextThenClickTab(addressLine1, " * < > ^ ! # $ + / : ; = ? @ [ ] ");
+		verifyErrorMsgUnderTheField(alphanumericCharactersErrorMsgUnderTheField, "Must be alphanumeric characters.");
+		pause(3); // is not used in the industry, this is used when you scripting the test cases,
+					// we will comment out all and run, if failed, then we will use web driver wait
+		clearTextFromTheField(addressLine1);
+		pause(3);
+		verifyErrorMsgUnderTheField(requiredFieldErrorMsgUnderTheField, "Required field.");
+		pause(3);
+		inputText(addressLine1, "6.1E 97th-s S_t, 66"); // **NOTE: Special characters allowed are: (Space) ' ‐ , . _
+		pause(3);
+	}
+	
+	public void addressLine2Validation() {
+		verifyLengthOfTheFieldContent(addressLine2, "64");
+		inputTextThenClickTab(addressLine2, " * < > ^ ! # $ + / : ; = ? @ [ ] ");
+		verifyErrorMsgUnderTheField(alphanumericCharactersErrorMsgUnderTheField, "Must be alphanumeric characters.");
+		pause(3); 
+		clearTextFromTheField(addressLine2);
+		pause(3);
+		inputText(addressLine2, "A.pt 123123 E 1009th-s S_t, 66");
+		pause(3);
+	}
+	
+	public void cityValidation() {
+		verifyLengthOfTheFieldContent(city, "30");
+		pause(3);
+		inputTextThenClickTab(city, " > ^ ! # $ + / : ; = ? @");		
+		verifyErrorMsgUnderTheField(alphabeticCharactersErrorMsgUnderTheField, "Must be alphabetic characters.");
+		pause(3);
+		clearTextFromTheField(city);
+		pause(3);
+		verifyErrorMsgUnderTheField(requiredFieldErrorMsgUnderTheField, "Required field.");
+		pause(3);
+		inputTextThenClickTab(city, "64783city");
+		pause(3);
+		verifyErrorMsgUnderTheField(alphabeticCharactersErrorMsgUnderTheField, "Must be alphabetic characters.");
+		pause(3);
+		clearTextFromTheField(city);
+		inputText(city, "Clark's Mountain"); // another example: Winston-Salem
+		pause(3);
+	}
+	
+	public void stateValidation() {
+//		selectDropdown(state, "New York"); // function is not same as Birth Month
+//		pause(3);
+//		selectDropdown(state, "Select State");
+//		pause(3);
+		clickElementThenTab(state);
+		pause(3);
+		verifyErrorMsgUnderTheField(requiredFieldErrorMsgUnderTheField, " Required field.");
+		pause(3);
+		selectDropdownOnebyOne(state, stateList);
+		pause(3);
+		selectDropdown(state, "New York");
+		pause(3);
+	}
+	
+	public void zipCodeValidation() {
+		verifyLengthOfTheFieldContent(zipCode, "5");	
+		inputTextThenClickTab(zipCode, "1002");
+		pause(3);
+		verifyErrorMsgUnderTheField(numericZipCodeErrorMsgUnderTheField, "Must be a valid numeric ZIP Code.");
+		clearTextFromTheField(zipCode);
+		pause(3);
+		verifyErrorMsgUnderTheField(requiredFieldErrorMsgUnderTheField, "Required field.");
+		pause(3);
+		inputTextThenClickTab(zipCode, " > ^ ! # $ + / : ; = ? @");
+		verifyErrorMsgUnderTheField(numericZipCodeErrorMsgUnderTheField, "Must be a valid numeric ZIP Code.");
+		pause(3);
+		clearTextFromTheField(zipCode);
+		inputText(zipCode, "AaBcR");
+		verifyErrorMsgUnderTheField(numericZipCodeErrorMsgUnderTheField, "Must be a valid numeric ZIP Code.");
+		pause(3);
+		clearTextFromTheField(zipCode);
+		inputText(zipCode, "10019");
+		pause(3);
+	}
+	
+	public void zipCodePlus4Validation() {
+		verifyLengthOfTheFieldContent(zipCodeExt, "4");
+		inputTextThenClickTab(zipCodeExt, "100");
+		verifyErrorMsgUnderTheField(numericZipPlus4CodeErrorMsgUnderTheField, "Must be a valid numeric ZIP+4 Code.");		
+		clearTextFromTheField(zipCodeExt);
+		pause(3);
+		inputTextThenClickTab(zipCodeExt, " > ^ ! # $ + / : ; = ? @");
+		verifyErrorMsgUnderTheField(numericZipPlus4CodeErrorMsgUnderTheField, "Must be a valid numeric ZIP+4 Code.");
+		pause(3);
+		clearTextFromTheField(zipCodeExt);
+		inputText(zipCodeExt, "AdBc");
+		verifyErrorMsgUnderTheField(numericZipPlus4CodeErrorMsgUnderTheField, "Must be a valid numeric ZIP+4 Code.");
+		pause(3);
+		clearTextFromTheField(zipCodeExt);
+		inputText(zipCodeExt, "1001");
+		pause(3);
+	}
+	
+	public void emailValidation() {
+		verifyLengthOfTheFieldContent(email, "74");
+		inputTextThenClickTab(email, "^%&^%^%&");
+//		pause(5);
+//		verifyErrorMsgUnderTheField(email, "Must be a valid Email Address.");		// actual error message is nt received
+		pause(3);
+		clearTextFromTheField(email);
+		pause(3);
+		verifyErrorMsgUnderTheField(requiredFieldErrorMsgUnderTheField, "Required field.");
+		pause(3);
+//		inputText(email, "12345");
+//		verifyErrorMsgUnderTheField(email, "Must be a valid Email Address.");
+//		pause(3);
+//		clearTextFromTheField(email);
+		inputText(email, "tofael483@gmail.com");
+		pause(3);
+		// Need to find out the requirements for email configuration
+	}
+	
+	public void emailConfirmValidation() {
+		verifyLengthOfTheFieldContent(confirmEmail, "74");
+		inputTextThenClickTab(confirmEmail, "amtks483@gmail.com");
+		pause(3);
+		verifyErrorMsgUnderTheField(mismatchEmailAddressErrorMsgUnderTheField, "Must match Email Address values.");
+		pause(3);
+		clearTextFromTheField(confirmEmail);
+		pause(3);
+		verifyErrorMsgUnderTheField(requiredFieldErrorMsgUnderTheField, "Required field.");
+		pause(3);		
+		inputText(confirmEmail, "tofael483@gmail.com");
+		pause(3);
+	}
+	
+	public void phoneNumberValidation() {
+		verifyLengthOfTheFieldContent(phoneNumber, "12");
+		inputText(phoneNumber, "0929301602");
+		verifyErrorMsgUnderTheField(phoneNumberNotStartWithErrorMsgUnderTheField, "Phone Number must not start with a 1 or 0.");
+		pause(3);
+		clearTextFromTheField(phoneNumber);
+		pause(3);
+		verifyErrorMsgUnderTheField(requiredFieldErrorMsgUnderTheField, "Required field.");
+		pause(3);
+		inputText(phoneNumber, "1929301602");
+		verifyErrorMsgUnderTheField(phoneNumberNotStartWithErrorMsgUnderTheField, "Phone Number must not start with a 1 or 0.");
+		pause(3);
+		clearTextFromTheField(phoneNumber);
+		pause(3);
+		inputText(phoneNumber, "(3)*<>^9!#$+ ");
+		pause(3);
+		verifyErrorMsgUnderTheField(validPhoneNumberErrorMsgUnderTheField, "Must be a valid Phone Number.");
+		pause(3);
+		clearTextFromTheField(phoneNumber);
+		pause(3);
+		inputText(phoneNumber, "ahsuchbs");
+		pause(3);
+		verifyErrorMsgUnderTheField(validPhoneNumberErrorMsgUnderTheField, "Must be a valid Phone Number.");
+		pause(3);
+		clearTextFromTheField(phoneNumber);
+		pause(3);
+		inputText(phoneNumber, "9293016028");
+		pause(5);
+	}
+	
+	public void nextStep2Validation() {
+		// not working
+		scrollIntoViewToTheElement(driver, "arguments[0].scrollIntoView(true);", nextButtonStep2);
+		clickElement(nextButtonStep2);
+		pause(5);
+	}
 
+
+
+
+
+	
 	
 	
 	

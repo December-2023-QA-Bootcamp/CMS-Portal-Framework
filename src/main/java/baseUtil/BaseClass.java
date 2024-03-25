@@ -63,7 +63,7 @@ public class BaseClass {
 	@Parameters("browser")
 	@BeforeMethod
 	// why firefox is not working
-	public void setUp(@Optional(EDGE) String browserName) {
+	public void setUp(@Optional(CHROME) String browserName) {
 		// If there is empty value or wrong value in testng.xml suite, then browser will not match and get the default one
 		// WebdriverManager is instantiating the ChromeDriver
 		
@@ -98,7 +98,7 @@ public class BaseClass {
 			break;
 
 		case FIREFOX:
-			System.setProperty("webdriver.gecko.driver", "./driver/geckodriver.exe");
+			System.setProperty("webdriver.gecko.driver", "./driver/geckodriver_old.exe");
 			driver = new FirefoxDriver();
 			break;
 		
