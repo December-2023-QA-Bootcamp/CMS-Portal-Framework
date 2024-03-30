@@ -8,6 +8,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -40,6 +41,18 @@ public class HomePage {
 	@FindBy(name = "user-d")
 	WebElement userId;
 	
+	@FindBy (how = How.NAME, using = "pass-d")
+	WebElement password;
+	
+	@FindBy(xpath = "//label[@id='cms-label-tc']")
+	WebElement checkBox;
+	
+	@FindBy (id = "cms-login-submit")
+	WebElement login;
+	
+	@FindBy(xpath = "//div[starts-with(text(),'Invalid')]")
+	WebElement loginErrorMsg;
+	
 	public void clickLoginButton() {
 		loginButton.click();
 		try {
@@ -54,5 +67,30 @@ public class HomePage {
 		clickElement(userId);
 		pause(4);
 	}
+	
+	// below methods Used in HomePageParameterizedTest Class	
+	public void inputUserIdField(String userIdFieldText) {
+		inputText(userId, userIdFieldText);
+	}
+	
+	public void inputPasswordField(String passwordFieldText) {
+		inputText(password, passwordFieldText);
+	}
+	
+	public void clickCheckBox() {
+		pause(3);
+		clickElement(checkBox);
+	}
+	
+	public void clickLogin() {
+		pause(3);
+		clickElement(login);		
+	}
+	
+	public void errorMessage(String errMsg) {
+		pause(3);
+		verifyErrorMsg(loginErrorMsg, errMsg);
+	}
+
 
 }

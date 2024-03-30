@@ -198,13 +198,21 @@ public class CommonActions {
 				element + " ---> Actual Error Message is : " + actual + ". And Expected was: " + expectedErrorMsg);
 		Assert.assertEquals(actual, expectedErrorMsg);
 	}
+	
+	public static void verifyAttribute03(WebElement element, Attribute attribute, String expectedErrorMsg) {
+		String actual = getAttributeValue(element, attribute) + " is a required field.";
+		// element.getAttribute(attribute.toString());
+		Loggers.logTheTest(
+				element + " ---> Actual Error Message is : " + actual + ". And Expected was: " + expectedErrorMsg);
+		Assert.assertEquals(actual, expectedErrorMsg);
+	}
 
 	public static void verifyErrorMsgUnderTheField(WebElement element, String expectedErrorMsg) {
 		verifyAttribute02(element, Attribute.INNER_TEXT, expectedErrorMsg); // "innerHTML"
 	}
 
-	public static void verifyErrorMsg(WebElement element, String expectedErrorMsg) {
-		verifyAttribute02(element, Attribute.INNER_TEXT, expectedErrorMsg); // "innerHTML"
+	public static void verifyErrorMsgTopOfThePage(WebElement element, String expectedErrorMsg) {
+		verifyAttribute03(element, Attribute.INNER_TEXT, expectedErrorMsg); // "innerHTML"
 	}
 
 	public static void hoverOverAction(WebDriver driver, WebElement element) {
@@ -366,6 +374,10 @@ public class CommonActions {
 			Loggers.logTheTest(element + "<----------> has not been found\n" + e.getMessage());
 			Assert.fail();
 		}
+	}
+	
+	public static void verifyErrorMsg(WebElement element, String expectedErrorMsg) {
+		verifyAttribute02(element, Attribute.INNER_TEXT, expectedErrorMsg); //"innerHTML"
 	}
 
 }

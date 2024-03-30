@@ -2,13 +2,9 @@ package pages;
 
 import static common.CommonActions.*;
 import static common.CommonWaits.*;
-
-
-
 import java.awt.Dimension;
 import java.time.Duration;
 import java.util.List;
-
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -16,8 +12,6 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
-import net.bytebuddy.asm.MemberSubstitution.FieldValue;
 
 public class NewUserRegistration {
 	WebDriver driver;
@@ -72,7 +66,10 @@ public class NewUserRegistration {
 	WebElement firstName;
 	
 	@FindBy(xpath = "//span[contains(text(), 'Required field.')]")
-	WebElement requiredFieldErrorMsgUnderTheField;
+	WebElement requiredFieldErrorMsgUnderFirstName;
+	
+	@FindBy(xpath = "//a[contains(text(), 'First Name')]")
+	WebElement firstNameErrorMsgTopOfThePage;
 
 	@FindBy(xpath = "//span[text()='Must be alphabetic characters.']")
 	WebElement alphabeticCharactersErrorMsgUnderTheField;
@@ -82,6 +79,12 @@ public class NewUserRegistration {
 
 	@FindBy(id = "cms-newuser-lastName")
 	WebElement lastName;
+	
+	@FindBy(xpath = "//span[contains(text(), 'Required field.')]")
+	WebElement requiredFieldErrorMsgUnderLastName;
+	
+	@FindBy(xpath = "//a[contains(text(), 'Last Name')]")
+	WebElement lastNameErrorMsgTopOfThePage;
 
 	@FindBy(id = "cms-newuser-nameSuffix")
 	WebElement suffix;
@@ -92,17 +95,35 @@ public class NewUserRegistration {
 	@FindBy(id = "cms-newuser-birthMonth")
 	WebElement birthMonth;
 	
+	@FindBy(xpath = "//span[contains(text(), 'Required field.')]")
+	WebElement requiredFieldErrorMsgUnderBirthMonth;
+	
+	@FindBy(xpath = "//a[contains(text(), 'Birth Month')]")
+	WebElement birthMonthErrorMsgTopOfThePage;
+	
 	@FindBy(xpath = "//select[@id='cms-newuser-birthMonth']/option")
 	List<WebElement> birthMonthList;
 
 	@FindBy(id = "cms-newuser-birthDate")
 	WebElement birthDate;
 	
+	@FindBy(xpath = "//span[contains(text(), 'Required field.')]")
+	WebElement requiredFieldErrorMsgUnderBirthDate;
+	
+	@FindBy(xpath = "//a[contains(text(), 'Birth Date')]")
+	WebElement birthDateErrorMsgTopOfThePage;
+	
 	@FindBy(xpath = "//select[@id='cms-newuser-birthDate']/option")
 	List<WebElement> birthDateList;
 
 	@FindBy(id = "cms-newuser-birthYear")
 	WebElement birthYear;
+	
+	@FindBy(xpath = "//span[contains(text(), 'Required field.')]")
+	WebElement requiredFieldErrorMsgUnderBirthYear;
+	
+	@FindBy(xpath = "//a[contains(text(), 'Birth Year')]")
+	WebElement birthYearErrorMsgTopOfThePage;
 	
 	@FindBy(xpath = "//select[@id='cms-newuser-birthYear']/option")
 	List<WebElement> birthYearList;
@@ -115,7 +136,13 @@ public class NewUserRegistration {
 
 	@FindBy(id = "cms-newuser-homeAddressLine1")
 	WebElement addressLine1;
-
+	
+	@FindBy(xpath = "//span[contains(text(), 'Required field.')]")
+	WebElement requiredFieldErrorMsgUnderHomeAddressLine1;
+	
+	@FindBy(xpath = "//a[contains(text(), 'Home Address Line1')]")
+	WebElement homeAddressLine1ErrorMsgTopOfThePage;
+	
 	@FindBy(xpath = "//span[text()='Must be alphanumeric characters.']")
 	WebElement alphanumericCharactersErrorMsgUnderTheField;
 
@@ -124,15 +151,33 @@ public class NewUserRegistration {
 
 	@FindBy(id = "cms-newuser-usCity")
 	WebElement city;
+	
+	@FindBy(xpath = "//span[contains(text(), 'Required field.')]")
+	WebElement requiredFieldErrorMsgUnderCity;
+	
+	@FindBy(xpath = "//a[contains(text(), 'City')]")
+	WebElement cityErrorMsgTopOfThePage;
 
 	@FindBy(id = "cms-newuser-usState")
 	WebElement state;
+	
+	@FindBy(xpath = "//span[contains(text(), 'Required field.')]")
+	WebElement requiredFieldErrorMsgUnderState;
+	
+	@FindBy(xpath = "//a[contains(text(), 'State')]")
+	WebElement stateErrorMsgTopOfThePage;
 	
 	@FindBy(xpath = "//select[@id='cms-newuser-usState']/option")
 	List<WebElement> stateList;
 
 	@FindBy(name = "cms-newuser-zipcode")
 	WebElement zipCode;
+	
+	@FindBy(xpath = "//span[contains(text(), 'Required field.')]")
+	WebElement requiredFieldErrorMsgUnderZipCode;
+	
+	@FindBy(xpath = "//a[contains(text(), 'Zip Code')]")
+	WebElement zipCodeMsgTopOfThePage;
 
 	@FindBy(xpath = "//span[text()='Must be a valid numeric ZIP Code.']")
 	WebElement numericZipCodeErrorMsgUnderTheField;
@@ -145,15 +190,33 @@ public class NewUserRegistration {
 
 	@FindBy(id = "cms-newuser-usEmail")
 	WebElement email;
+	
+	@FindBy(xpath = "//span[contains(text(), 'Required field.')]")
+	WebElement requiredFieldErrorMsgUnderEmail;
+	
+	@FindBy(xpath = "//a[contains(text(), 'Email Address')]")
+	WebElement emailAddressMsgTopOfThePage;
 
 	@FindBy(id = "cms-newuser-usConfirmEmail")
 	WebElement confirmEmail;
+	
+	@FindBy(xpath = "//span[contains(text(), 'Required field.')]")
+	WebElement requiredFieldErrorMsgUnderConfirmEmail;
+	
+	@FindBy(xpath = "//a[contains(text(), 'Confirm Email Address')]")
+	WebElement confirmEmailAddressMsgTopOfThePage;
 
 	@FindBy(xpath = "//span[text()='Must match Email Address values.']")
 	WebElement mismatchEmailAddressErrorMsgUnderTheField;
 
 	@FindBy(id = "cms-newuser-usPhoneNumber")
 	WebElement phoneNumber;
+	
+	@FindBy(xpath = "//span[contains(text(), 'Required field.')]")
+	WebElement requiredFieldErrorMsgUnderPhoneNumber;
+	
+	@FindBy(xpath = "//a[contains(text(), 'Phone Number')]")
+	WebElement phoneNumberMsgTopOfThePage;
 
 	@FindBy(xpath = "//span[text()='Phone Number must not start with a 1 or 0.']")
 	WebElement phoneNumberNotStartWithErrorMsgUnderTheField;
@@ -163,9 +226,13 @@ public class NewUserRegistration {
 
 	@FindBy(id = "step2NextButton")
 	WebElement nextButtonStep2;
+	
+	@FindBy(xpath = "(//a[contains(text(), 'Cancel')])[2]")
+	WebElement stepTwoCancel;
+	
+	@FindBy(id = "step2BackButton")
+	WebElement stepTwoBackButton;
 		
-	
-	
 	public void landingOnhomePageAndDirectingToNewUserRegistration() {
 		elementDisplayed(logo);
 		verifyTitle(driver,"CMS Enterprise Portal");
@@ -176,13 +243,11 @@ public class NewUserRegistration {
 	}
 	
 	public void stepOneClickOnCancelButtonDirectToHomePage() {
-		pause(3);
 		clickElement(selectYourApplication);
 		inputTextThenClickEnter(textSearch, "BCRS Web");
 		elementEnabled(stepOneCancel);
 		verifyTextInTheWebElement(stepOneCancel, "Cancel");
-		//clickElement(stepOneCancel);
-		usingJavascriptExecutor(driver, "arguments[0].click()", stepOneCancel);
+		clickElement(stepOneCancel);
 		pause(3);
 		currentUrl(driver, "https://portal.cms.gov/portal/");
 	}
@@ -221,7 +286,7 @@ public class NewUserRegistration {
 		verifyErrorMsgUnderTheField(alphabeticCharactersErrorMsgUnderTheField, "Must be alphabetic characters.");
 		pause(3);
 		clearTextFromTheField(firstName);
-		verifyErrorMsgUnderTheField(requiredFieldErrorMsgUnderTheField, "Required field.");
+		verifyErrorMsgUnderTheField(requiredFieldErrorMsgUnderFirstName, "Required field.");
 		pause(3);
 		inputText(firstName, "6573684765");
 		verifyErrorMsgUnderTheField(alphabeticCharactersErrorMsgUnderTheField, "Must be alphabetic characters.");
@@ -254,7 +319,7 @@ public class NewUserRegistration {
 		verifyErrorMsgUnderTheField(alphabeticCharactersErrorMsgUnderTheField, "Must be alphabetic characters.");
 		pause(3);
 		clearTextFromTheField(lastName);
-		verifyErrorMsgUnderTheField(requiredFieldErrorMsgUnderTheField, "Required field.");
+		verifyErrorMsgUnderTheField(requiredFieldErrorMsgUnderLastName, "Required field.");
 		pause(3);
 		inputText(lastName, "6573684765");
 		verifyErrorMsgUnderTheField(alphabeticCharactersErrorMsgUnderTheField, "Must be alphabetic characters.");
@@ -272,37 +337,30 @@ public class NewUserRegistration {
 		pause(3);
 	}
 	
-	public void dobValidation() {
-		
+	public void dobValidation() {	
 		selectDropdown(birthMonth, "February");
 		pause(3);
 		selectDropdown(birthMonth, "Select Birth Month");
 		pause(3);
-		verifyErrorMsgUnderTheField(requiredFieldErrorMsgUnderTheField, " Required field.");
+		verifyErrorMsgUnderTheField(requiredFieldErrorMsgUnderBirthMonth, " Required field.");
+		pause(3);
+		verifyErrorMsgTopOfThePage(birthMonthErrorMsgTopOfThePage, "Birth Month is a required field.");
 		pause(3);
 		selectDropdownOnebyOne(birthMonth, birthMonthList);
 		selectDropdown(birthMonth, "February");
-	
-		
-		/*
-		clickElementThenTab(birthMonth);
+		pause(5);
+		selectDropdown(birthDate, "1");
 		pause(3);
-		clickElementThenTab(birthDate); // First 2 under the field message can't be validated, 3rd one done
+		selectDropdown(birthMonth, "Select Birth Date");
 		pause(3);
-		clickElementThenTab(birthYear);
+		verifyErrorMsgUnderTheField(requiredFieldErrorMsgUnderBirthDate, " Required field.");
 		pause(3);
-		verifyErrorMsgUnderTheField(requiredFieldErrorMsgUnderTheField, "Required field.");
-		pause(3);
-		selectDropdownOnebyOne(birthMonth, birthMonthList);
-		selectDropdown(birthMonth, "February");
+		verifyErrorMsgTopOfThePage(birthDateErrorMsgTopOfThePage, "Birth Date is a required field.");
 		pause(3);
 		selectDropdownOnebyOne(birthDate, birthDateList);
-		selectDropdown(birthDate, "29");
-		pause(3);
-		selectDropdownOnebyOne(birthYear, birthYearList);
-		selectDropdown(birthYear, "1996");
-		pause(3);
-			*/
+		selectDropdown(birthDate, "28");
+	
+		// Birth Year need to be added
 		
 	}
 	
@@ -318,7 +376,7 @@ public class NewUserRegistration {
 					// we will comment out all and run, if failed, then we will use web driver wait
 		clearTextFromTheField(addressLine1);
 		pause(3);
-		verifyErrorMsgUnderTheField(requiredFieldErrorMsgUnderTheField, "Required field.");
+		verifyErrorMsgUnderTheField(requiredFieldErrorMsgUnderHomeAddressLine1, "Required field.");
 		pause(3);
 		inputText(addressLine1, "6.1E 97th-s S_t, 66"); // **NOTE: Special characters allowed are: (Space) ' ‐ , . _
 		pause(3);
@@ -343,7 +401,7 @@ public class NewUserRegistration {
 		pause(3);
 		clearTextFromTheField(city);
 		pause(3);
-		verifyErrorMsgUnderTheField(requiredFieldErrorMsgUnderTheField, "Required field.");
+		verifyErrorMsgUnderTheField(requiredFieldErrorMsgUnderCity, "Required field.");
 		pause(3);
 		inputTextThenClickTab(city, "64783city");
 		pause(3);
@@ -361,7 +419,7 @@ public class NewUserRegistration {
 //		pause(3);
 		clickElementThenTab(state);
 		pause(3);
-		verifyErrorMsgUnderTheField(requiredFieldErrorMsgUnderTheField, " Required field.");
+		verifyErrorMsgUnderTheField(requiredFieldErrorMsgUnderState, " Required field.");
 		pause(3);
 		selectDropdownOnebyOne(state, stateList);
 		pause(3);
@@ -376,7 +434,7 @@ public class NewUserRegistration {
 		verifyErrorMsgUnderTheField(numericZipCodeErrorMsgUnderTheField, "Must be a valid numeric ZIP Code.");
 		clearTextFromTheField(zipCode);
 		pause(3);
-		verifyErrorMsgUnderTheField(requiredFieldErrorMsgUnderTheField, "Required field.");
+		verifyErrorMsgUnderTheField(requiredFieldErrorMsgUnderZipCode, "Required field.");
 		pause(3);
 		inputTextThenClickTab(zipCode, " > ^ ! # $ + / : ; = ? @");
 		verifyErrorMsgUnderTheField(numericZipCodeErrorMsgUnderTheField, "Must be a valid numeric ZIP Code.");
@@ -416,7 +474,7 @@ public class NewUserRegistration {
 		pause(3);
 		clearTextFromTheField(email);
 		pause(3);
-		verifyErrorMsgUnderTheField(requiredFieldErrorMsgUnderTheField, "Required field.");
+		verifyErrorMsgUnderTheField(requiredFieldErrorMsgUnderEmail, "Required field.");
 		pause(3);
 //		inputText(email, "12345");
 //		verifyErrorMsgUnderTheField(email, "Must be a valid Email Address.");
@@ -435,7 +493,7 @@ public class NewUserRegistration {
 		pause(3);
 		clearTextFromTheField(confirmEmail);
 		pause(3);
-		verifyErrorMsgUnderTheField(requiredFieldErrorMsgUnderTheField, "Required field.");
+		verifyErrorMsgUnderTheField(requiredFieldErrorMsgUnderConfirmEmail, "Required field.");
 		pause(3);		
 		inputText(confirmEmail, "tofael483@gmail.com");
 		pause(3);
@@ -448,7 +506,7 @@ public class NewUserRegistration {
 		pause(3);
 		clearTextFromTheField(phoneNumber);
 		pause(3);
-		verifyErrorMsgUnderTheField(requiredFieldErrorMsgUnderTheField, "Required field.");
+		verifyErrorMsgUnderTheField(requiredFieldErrorMsgUnderPhoneNumber, "Required field.");
 		pause(3);
 		inputText(phoneNumber, "1929301602");
 		verifyErrorMsgUnderTheField(phoneNumberNotStartWithErrorMsgUnderTheField, "Phone Number must not start with a 1 or 0.");
@@ -472,11 +530,112 @@ public class NewUserRegistration {
 	}
 	
 	public void nextStep2Validation() {
-		// not working
 		scrollIntoViewToTheElement(driver, "arguments[0].scrollIntoView(true);", nextButtonStep2);
+		elementEnabled(nextButtonStep2);
+		verifyTextInTheWebElement(nextButtonStep2, "Next");
+		pause(3);
 		clickElement(nextButtonStep2);
 		pause(5);
 	}
+	
+	public void clickOnNextButtonInStep2WithoutAnyData() {
+		pause(3);
+		scrollIntoViewToTheElement(driver, "arguments[0].scrollIntoView(true);", nextButtonStep2);
+		pause(3);
+		clickElement(nextButtonStep2);
+		pause(5);
+		verifyErrorMsgTopOfThePage(firstNameErrorMsgTopOfThePage, "First Name is a required field.");
+		verifyErrorMsgTopOfThePage(lastNameErrorMsgTopOfThePage, "Last Name is a required field.");
+		verifyErrorMsgTopOfThePage(birthMonthErrorMsgTopOfThePage, "Birth Month is a required field.");
+		verifyErrorMsgTopOfThePage(birthDateErrorMsgTopOfThePage, "Birth Date is a required field.");
+		verifyErrorMsgTopOfThePage(birthYearErrorMsgTopOfThePage, "Birth Year is a required field.");
+		verifyErrorMsgTopOfThePage(homeAddressLine1ErrorMsgTopOfThePage, "Home Address Line1 is a required field.");
+		verifyErrorMsgTopOfThePage(cityErrorMsgTopOfThePage, "City is a required field.");
+		verifyErrorMsgTopOfThePage(stateErrorMsgTopOfThePage, "State is a required field.");
+		verifyErrorMsgTopOfThePage(zipCodeMsgTopOfThePage, "Zip Code is a required field.");
+		verifyErrorMsgTopOfThePage(emailAddressMsgTopOfThePage, "Email Address is a required field.");
+		verifyErrorMsgTopOfThePage(confirmEmailAddressMsgTopOfThePage, "Confirm Email Address is a required field.");
+		verifyErrorMsgTopOfThePage(phoneNumberMsgTopOfThePage, "Phone Number is a required field.");
+		pause(5);
+		verifyErrorMsgUnderTheField(requiredFieldErrorMsgUnderFirstName, "Required field.");
+		verifyErrorMsgUnderTheField(requiredFieldErrorMsgUnderLastName, "Required field.");
+		verifyErrorMsgUnderTheField(requiredFieldErrorMsgUnderBirthMonth, "Required field.");
+		verifyErrorMsgUnderTheField(requiredFieldErrorMsgUnderBirthDate, "Required field.");
+		verifyErrorMsgUnderTheField(requiredFieldErrorMsgUnderBirthYear, "Required field.");
+		verifyErrorMsgUnderTheField(requiredFieldErrorMsgUnderHomeAddressLine1, "Required field.");
+		verifyErrorMsgUnderTheField(requiredFieldErrorMsgUnderCity, "Required field.");
+		verifyErrorMsgUnderTheField(requiredFieldErrorMsgUnderState, "Required field.");
+		verifyErrorMsgUnderTheField(requiredFieldErrorMsgUnderZipCode, "Required field.");
+		verifyErrorMsgUnderTheField(requiredFieldErrorMsgUnderEmail, "Required field.");
+		verifyErrorMsgUnderTheField(requiredFieldErrorMsgUnderConfirmEmail, "Required field.");
+		verifyErrorMsgUnderTheField(requiredFieldErrorMsgUnderPhoneNumber, "Required field.");
+		pause(3);
+	}
+	
+	public void untilClickOnNextButtonInStep2WithData() {
+		pause(3);
+		inputText(firstName, "Moha'mm-ad Md");
+		pause(3);
+		inputText(middleName, "To'fael Ka-bir");
+		pause(3);
+		inputText(lastName, "S'- harkar");
+		pause(5);
+		selectDropdown(suffix, "SR");
+		pause(3);
+		selectDropdown(birthMonth, "February");
+		pause(5);
+		selectDropdown(birthDate, "28");
+		pause(5);
+		selectDropdown(birthYear, "1975");
+		pause(5);
+		inputText(addressLine1, "6.1E 97th-s S_t, 66");
+		pause(3);
+		inputText(addressLine2, "A.pt 123123 E 1009th-s S_t, 66");
+		pause(3);
+		inputText(city, "Clark's Mountain"); // another example: Winston-Salem
+		pause(3);
+		selectDropdown(state, "New York");
+		pause(3);
+		inputText(zipCode, "10019");
+		pause(3);
+		inputText(zipCodeExt, "1001");
+		pause(3);
+		inputText(email, "tofael483@gmail.com");
+		pause(3);
+		inputText(confirmEmail, "tofael483@gmail.com");
+		pause(3);
+		inputText(phoneNumber, "9293016028");
+		pause(5);
+	}
+	
+	public void stepTwoClickOnCancelButtonDirectToHomePage() {
+		pause(5);
+		scrollIntoViewToTheElement(driver, "arguments[0].scrollIntoView(true);", stepTwoCancel);
+		elementEnabled(stepTwoCancel);
+		verifyTextInTheWebElement(stepTwoCancel, "Cancel");
+		pause(3);
+		clickElement(stepTwoCancel);
+		pause(3);
+		currentUrl(driver, "https://portal.cms.gov/portal/");
+	}
+	
+	public void stepTwoClickOnBackButtonDirectToPreviousPage() {
+		pause(5);
+		scrollIntoViewToTheElement(driver, "arguments[0].scrollIntoView(true);", stepTwoBackButton);
+		elementEnabled(stepTwoBackButton);
+		verifyTextInTheWebElement(stepTwoBackButton, "Back");
+		pause(3);
+		clickElement(stepTwoBackButton);
+		pause(3);
+		currentUrl(driver, "https://portal.cms.gov/portal/newuserregistration"); // no need
+		verifyTitle(driver, "CMS Enterprise Portal - New User Registration"); // no need
+		validationOfHeader(stepOneHeader, "Step #1: Select Your Application");
+		validationOfSubHeader(stepOneSubHeader, "Step 1 of 3 - Select your application from the dropdown. You will then need to agree to the terms & conditions.");
+		pause(3);
+	}
+	
+	
+	
 
 
 
